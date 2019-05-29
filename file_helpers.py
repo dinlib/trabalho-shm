@@ -7,36 +7,36 @@ class FileType(Enum):
     AUDIO = "wav"
 
 
-def read_file(filename):
-    with open(filename) as file:
-        content = file.read()
-        file_extension = filename.split('.')[-1]
+def read_file(file_path):
+    with open(file_path) as f:
+        content = f.read()
+        file_extension = file_path.split('.')[-1]
 
     return (content, FileType(file_extension))
 
 
-def dump(text, audio, morse, filename):
+def dump(text, audio, morse, file_path):
     if text:
-        dump_text(text, filename)
+        dump_text(text, file_path)
 
     if audio:
-        dump_audio(audio, filename)
+        dump_audio(audio, file_path)
 
     if morse:
-        dump_morse(morse, filename)
+        dump_morse(morse, file_path)
 
 
-def dump_text(text, filename):
-    output_path = '{}.{}'.format(filename, FileType.TEXT.value)
-    with open(output_path, 'w') as file:
-        file.write(text)
+def dump_text(text, file_path_no_extension):
+    output_path = '{}.{}'.format(file_path_no_extension, FileType.TEXT.value)
+    with open(output_path, 'w') as f:
+        f.write(text)
 
 
-def dump_morse(morse, filename):
-    output_path = '{}.{}'.format(filename, FileType.MORSE.value)
-    with open(output_path, 'w') as file:
-        file.write(morse)
+def dump_morse(morse, file_path_no_extension):
+    output_path = '{}.{}'.format(file_path_no_extension, FileType.MORSE.value)
+    with open(output_path, 'w') as f:
+        f.write(morse)
 
 
-def dump_audio(audio, filename):
+def dump_audio(audio, file_path_no_extension):
     raise NotImplementedError

@@ -49,7 +49,18 @@ MORSE_TABLE = {
 
 
 def parse_text_to_morse(text):
-    return SPACE_BETWEEN_WORDS.join(map(lambda word: SPACE_BETWEEN_LETTERS.join(map(lambda l: SPACE_LETTER.join(MORSE_TABLE[l]), word)), map(lambda word: filter(lambda c: c in SUPPORTED_CHARS, word), text.upper().split(' '))))
+    words = text.upper().split(' ')
+    clean_words = map(filter_only_supported_chars, words)
+    words_in_morse = map(transform_word_to_morse, clean_words)
+    return SPACE_BETWEEN_WORDS.join(words_in_morse)
+
+
+def filter_only_supported_chars(word):
+    return filter(lambda c: c in SUPPORTED_CHARS, word)
+
+
+def transform_word_to_morse(word):
+    return SPACE_BETWEEN_LETTERS.join(map(lambda l: SPACE_LETTER.join(MORSE_TABLE[l]), word))
 
 
 def parse_text_to_audio(text):
