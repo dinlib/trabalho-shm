@@ -46,6 +46,49 @@ MORSE_TO_TEXT_TABLE = {
     DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH: '0',
 }
 
+TEXT_TO_MORSE_TABLE = {
+    'A': DOT + SPACE_LETTER + DASH,
+    'B': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    'C': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DASH + SPACE_LETTER + DOT,
+    'D': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    'E': DOT,
+    'F': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH + SPACE_LETTER + DOT,
+    'G': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT,
+    'H': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    'I': DOT + SPACE_LETTER + DOT,
+    'J': DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    'K': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DASH,
+    'L': DOT + SPACE_LETTER + DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    'M': DASH + SPACE_LETTER + DASH,
+    'N': DASH + SPACE_LETTER + DOT,
+    'O': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    'P': DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT,
+    'Q': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT + SPACE_LETTER + DASH,
+    'R': DOT + SPACE_LETTER + DASH + SPACE_LETTER + DOT,
+    'S': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    'T': DASH,
+    'U': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH,
+    'V': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH,
+    'W': DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    'X': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH,
+    'Y': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    'Z': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    '1': DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    '2': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    '3': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+    '4': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DASH,
+    '5': DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    '6': DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    '7': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    '8': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT + SPACE_LETTER + DOT,
+    '9': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DOT,
+    '0': DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH + SPACE_LETTER + DASH,
+}
+
+#####################
+### MORSE -> TEXT ###
+#####################
+
 
 def parse_morse_to_text(morse):
     words = morse.split(SPACE_BETWEEN_WORDS)
@@ -60,6 +103,29 @@ def transform_word_to_text(word):
 
 def transform_letter_to_text(letter):
     return MORSE_TO_TEXT_TABLE[letter]
+
+
+#####################
+### TEXT -> MORSE ###
+#####################
+
+def parse_text_to_morse(text):
+    words = text.upper().split(' ')
+    clean_words = map(filter_only_supported_chars, words)
+    words_in_morse = map(transform_word_to_morse, clean_words)
+    return SPACE_BETWEEN_WORDS.join(words_in_morse)
+
+
+def filter_only_supported_chars(word):
+    return filter(lambda c: c in SUPPORTED_CHARS, word)
+
+
+def transform_word_to_morse(word):
+    return SPACE_BETWEEN_LETTERS.join(map(transform_letter_to_morse, word))
+
+
+def transform_letter_to_morse(letter):
+    return TEXT_TO_MORSE_TABLE[letter]
 
 
 def parse_morse_to_audio(morse):

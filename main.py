@@ -1,8 +1,8 @@
 import argparse
 
 from file_helpers import FileType, read_file, dump
-from text import parse_text_to_morse, parse_text_to_audio
-from morse import parse_morse_to_audio, parse_morse_to_text
+from text import parse_text_to_audio
+from morse import parse_morse_to_audio, parse_morse_to_text, parse_text_to_morse
 from audio import parse_audio_to_morse, parse_audio_to_text
 
 
