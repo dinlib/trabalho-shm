@@ -6,10 +6,6 @@ from morse import parse_morse_to_audio, parse_morse_to_text
 from audio import parse_audio_to_morse, parse_audio_to_text
 
 
-def usage():
-    print("USAGE: python3 main.py [file_path]")
-
-
 def main():
     parser = argparse.ArgumentParser(
         description='Parse text, morse and audio files.')
