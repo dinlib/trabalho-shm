@@ -60,7 +60,11 @@ def filter_only_supported_chars(word):
 
 
 def transform_word_to_morse(word):
-    return SPACE_BETWEEN_LETTERS.join(map(lambda l: SPACE_LETTER.join(MORSE_TABLE[l]), word))
+    return SPACE_BETWEEN_LETTERS.join(map(transform_letter_to_morse, word))
+
+
+def transform_letter_to_morse(letter):
+    return SPACE_LETTER.join(MORSE_TABLE[letter])
 
 
 def parse_text_to_audio(text):
