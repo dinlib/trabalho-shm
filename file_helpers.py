@@ -1,4 +1,6 @@
 from enum import Enum
+import numpy as np
+import audio.signalwave as signalwave
 
 
 class FileType(Enum):
@@ -16,13 +18,13 @@ def read_file(file_path):
 
 
 def dump(text, audio, morse, file_path):
-    if text:
+    if text is not None:
         dump_text(text, file_path)
 
-    if audio:
+    if audio is not None:
         dump_audio(audio, file_path)
 
-    if morse:
+    if morse is not None:
         dump_morse(morse, file_path)
 
 
@@ -39,4 +41,5 @@ def dump_morse(morse, file_path_no_extension):
 
 
 def dump_audio(audio, file_path_no_extension):
-    raise NotImplementedError
+    signalwave.save_wave(audio, '{}.wav'.format(
+        file_path_no_extension), amplitude=16000)

@@ -1,3 +1,5 @@
+import audio.signalwave as signalwave
+import numpy as np
 
 DOT = '1'
 DASH = '111'
@@ -129,4 +131,30 @@ def transform_letter_to_morse(letter):
 
 
 def parse_morse_to_audio(morse):
-    raise NotImplementedError
+    frequency = 440
+    sampling_rate = 48000
+    amplitude = 16000
+    time_ = 3
+
+    waves = np.array([])
+
+    words = morse.split(SPACE_BETWEEN_WORDS)
+    for word in words:
+        letters = word.split(SPACE_BETWEEN_LETTERS)
+        for letter in letters:
+            components = letter.split(SPACE_LETTER)
+            for component in components:
+                time_ = 0.25 if component == DOT else 0.75
+                wave = signalwave.signalwave(
+                    frequency, sampling_rate, time=time_)
+                waves = np.concatenate((waves, np.array(wave)))
+                wave = signalwave.signalwave(0, sampling_rate, time=0.25)
+                waves = np.concatenate((waves, np.array(wave)))
+
+            wave = signalwave.signalwave(0, sampling_rate, time=0.75)
+            waves = np.concatenate((waves, np.array(wave)))
+
+        wave = signalwave.signalwave(0, sampling_rate, time=0.25 * 7)
+        waves = np.concatenate((waves, np.array(wave)))
+
+    return waves

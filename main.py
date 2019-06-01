@@ -3,7 +3,7 @@ import argparse
 from file_helpers import FileType, read_file, dump
 from text import parse_text_to_audio
 from morse import parse_morse_to_audio, parse_morse_to_text, parse_text_to_morse
-from audio import parse_audio_to_morse, parse_audio_to_text
+# from audio import parse_audio_to_morse, parse_audio_to_text
 
 
 def main():
@@ -23,12 +23,12 @@ def main():
         dump(None, None, morse, file_path_no_extension)
     elif file_type == FileType.MORSE:
         text = parse_morse_to_text(content)
-        # audio = parse_morse_to_audio(content)
-        dump(text, None, None, file_path_no_extension)
-    else:
-        text = parse_audio_to_text(content)
-        morse = parse_audio_to_morse(content)
-        dump(text, None, morse, file_path_no_extension)
+        audio = parse_morse_to_audio(content)
+        dump(text, audio, None, file_path_no_extension)
+    # else:
+        # text = parse_audio_to_text(content)
+        # morse = parse_audio_to_morse(content)
+        # dump(text, None, morse, file_path_no_extension)
 
 
 if __name__ == "__main__":
